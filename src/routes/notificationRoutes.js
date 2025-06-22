@@ -3,22 +3,23 @@ import {
   getNotifications,
   markAsRead,
   markAllAsRead,
-  getUnreadCount
+  getUnreadCount,
+  createNotification
 } from '../controllers/notificationController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import { notificationLimiter } from '../middleware/rateLimiter.js';
+import { notificationLimiter } from '../middlewares/rateLimiter.js';
 
-
-router.use(notificationLimiter);
 
 const router = express.Router();
+router.use(notificationLimiter);
 
 router.get('/', authMiddleware, getNotifications);
+router.post('/create-notification', authMiddleware, createNotification);
 router.patch('/:id/read', authMiddleware, markAsRead);
 // router.patch('/read-all', authMiddleware, markAllAsRead);
 // router.get('/unread-count', authMiddleware, getUnreadCount);
-router.patch('/read-all', protect, markAllAsRead);
-router.get('/unread-count', protect, getUnreadCount);
+router.patch('/read-all', authMiddleware, markAllAsRead);
+router.get('/unread-count', authMiddleware, getUnreadCount);
 
 
 

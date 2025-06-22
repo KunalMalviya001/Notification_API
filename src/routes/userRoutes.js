@@ -1,9 +1,9 @@
 import express from 'express';
 import { updateNotificationPreferences } from '../controllers/userController.js';
-import { protect } from '../middleware/authMiddleware.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.patch('/preferences', protect, updateNotificationPreferences);
+router.patch('/preferences', authMiddleware, updateNotificationPreferences);
 
 export default router;
