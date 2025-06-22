@@ -18,12 +18,37 @@ export const markAsRead = async (req, res) => {
   res.json(notification);
 };
 
+// export const markAllAsRead = async (req, res) => {
+//   await Notification.updateMany({ receiverId: req.user.id }, { read: true });
+//   res.json({ message: 'All notifications marked as read' });
+// };
+
+// export const getUnreadCount = async (req, res) => {
+//   const count = await Notification.countDocuments({ receiverId: req.user.id, read: false });
+//   res.json({ count });
+// };
+
 export const markAllAsRead = async (req, res) => {
-  await Notification.updateMany({ receiverId: req.user.id }, { read: true });
-  res.json({ message: 'All notifications marked as read' });
+  try {
+    await Notification.updateMany(
+      { recipient: req.user.id, read: false },
+      { $set: { read: true } }
+    );
+    res.status(200).json({ message: 'All notifications marked as read' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
+
 export const getUnreadCount = async (req, res) => {
-  const count = await Notification.countDocuments({ receiverId: req.user.id, read: false });
-  res.json({ count });
+  try {
+    const count = await Notification.countDocuments({
+      recipient: req.user.id,
+      read: false
+    });
+    res.status(200).json({ unread: count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };

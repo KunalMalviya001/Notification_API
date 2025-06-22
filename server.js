@@ -5,6 +5,7 @@ import authRoutes from './src/routes/authRoutes.js';
 import notificationRoutes from './src/routes/notificationRoutes.js';
 import http from 'http';    
 import { Server } from 'socket.io';
+import userRoutes from './src/routes/userRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -21,12 +22,12 @@ connectDB();
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/user', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 const onlineUsers = new Map();
-
 io.on('connection', (socket) => {
   socket.on('register', (userId) => {
     onlineUsers.set(userId, socket.id);
@@ -34,7 +35,9 @@ io.on('connection', (socket) => {
 
   socket.on('send-notification', ({ receiverId, notification }) => {
     const socketId = onlineUsers.get(receiverId);
-    if (socketId) io.to(socketId).emit('notification', notification);
+    if (socketId) {
+      io.to(socketId).emit('notification', notification);
+    }
   });
 
   socket.on('disconnect', () => {
