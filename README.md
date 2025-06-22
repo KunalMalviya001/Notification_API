@@ -1,6 +1,3 @@
----
-
-```
 # 📬 Notification Feed API
 
 A scalable backend API built with Node.js, Express.js, and MongoDB to handle notifications for user interactions like follows, likes, and comments. Includes authentication, real-time updates with Socket.IO, and a modular RESTful design.
@@ -29,7 +26,6 @@ A scalable backend API built with Node.js, Express.js, and MongoDB to handle not
 
 ## 📂 Project Structure
 
-```
 
 notification_API_Assignment
 ├── src/
@@ -55,7 +51,6 @@ notification_API_Assignment
 ├── README.md
 └── server.js
 
-````
 
 ---
 
@@ -74,32 +69,33 @@ notification_API_Assignment
 
 ### 1. Clone the repo
 
-```bash
+bash:-
+
 git clone https://github.com/your-username/notification_API_Assignment.git
 cd notification_API_Assignment
-````
 
 ### 2. Install dependencies
 
-```bash
+bash :-
+
 npm install
-```
 
 ### 3. Create `.env` file
 
-```env
+env :-
+
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/notification_api
 JWT_SECRET=your_jwt_secret
-```
+
 
 ### 4. Run the app
 
-```bash
+bash :-
+
 npm run dev
 # or
 npm start
-```
 
 ---
 
@@ -157,5 +153,3 @@ To use:
 * Open Postman
 * Click **Import**
 * Upload the JSON file
-
----
